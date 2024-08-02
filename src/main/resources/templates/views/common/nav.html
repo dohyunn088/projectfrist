@@ -1,0 +1,51 @@
+
+ <!--담당자:전송희  -->
+
+  
+	<nav class="cmnav">
+		<div class="cmnav-top">
+			<i class="fa-solid fa-bars menubar"></i>
+			<div class="logo">
+				<h1 >
+					<a href="/"> <img src="/images/logo2.png" alt="JOHT office">
+					</a>
+				</h1>
+
+			</div>
+
+		</div>
+
+		<div class="cmnav-bttom">
+			<ul class="menu">
+				<li><a href="/"><i class="fa-solid fa-house"></i><span>홈</span></a></li>
+				<li><a href="/personnel"><i class="fa-regular fa-user"></i><span>인사관리</span></a></li>
+				<li><a href="#"><i class="fa-solid fa-list-ul"></i><span>예약관리</span></a></li>
+				<li><a href="/inventory"><i class="fa-regular fa-calendar-days"></i><span>재고/구매</span></a></li>
+				<li><a href="/notices"><i class="fa-solid fa-comment-dots"></i><span>공지사항</span></a></li>
+				<li><a href="/calendar"><i class="fa-solid fa-book"></i><span>일정관리</span></a></li>
+				<li><a href="#" id="openModal"><i class="fa-solid fa-comment-dots"></i><span>사내채팅</span></a></li>
+			</ul>
+			
+			<div id="myModal" class="modal">
+						<div class="modal-content">
+							<span class="close">&times;</span>
+							<iframe id="chatFrame" src="" width="100%" height="500"></iframe>
+						</div>
+					</div>
+			
+			<ul class="administrator-menu">
+				<li><a href="#"><i class="fa-solid fa-user-tie"></i><span>관리자</span></a></li>
+			</ul>
+			
+		    <ul class="logout">
+				<li>
+					<form action="/logout" method="post">
+						<input type="hidden" th:name="${_csrf.parameterName}"th:value="${_csrf.token}" />
+						<button type="submit"><i class="fa-solid fa-right-from-bracket"></i></button>
+					</form>
+				</li>
+			</ul>
+
+		</div>
+
+	</nav>

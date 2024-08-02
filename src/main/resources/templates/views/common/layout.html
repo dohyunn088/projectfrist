@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:fragment="layout(pHead,pMain)">
+<head>
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <!--담당자:전송희  -->
+     <!-- 공통적용-->
+	<link rel="icon" type="image/x-icon" href="/images/logo.ico">	
+	<link rel="stylesheet" href="/css/chat/popup.css">
+	<link rel="stylesheet" href="/css/common/reset.css"> 
+	<link rel="stylesheet" href="/css/common/cmlayout.css">
+	<link rel="stylesheet" href="/css/common/header.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+	<script src="/js/common/jquery-3.7.1.min.js" defer></script> 
+    <script src="https://kit.fontawesome.com/890a398c47.js" crossorigin="anonymous"></script> 
+    <script src="/js/common/common.js" defer></script> 
+	<script src="/js/common/header.js"></script>
+	<script src="/js/chat/popup.js"></script>
+	
+	
+	<!--각 html 마다 적용-->
+	<th:block th:insert="${pHead}">
+<title>죠트</title>
+</head>
+
+<body>
+	
+	<div class="layoutWrap">
+
+		<th:block th:replace="~{/views/common/header}"/>
+		
+		<th:block th:replace="~{/views/common/nav}"/>
+		
+		
+		<th:block th:replace="${pMain}"/>
+		
+		
+	    <!--사용하지 않습니다.-->
+	    <!--<footer th:replace="~{/views/common/footer}"></footer> -->
+	   
+		<th:block th:replace="~{/views/chatbot/list}"/>
+		
+	
+		
+		
+	</div>
+
+
+
+</body>
+
+
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{views/common/layout :: layout(~{::head} ,~{::main} ) }">
+<head>
+	<meta charset='utf-8' />
+	<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
+	<script>
+
+		document.addEventListener('DOMContentLoaded', function() {
+			var calendarEl = document.getElementById('calendar');
+			var calendar = new FullCalendar.Calendar(calendarEl, {
+				initialView: 'dayGridMonth'
+			});
+			calendar.render();
+		});
+
+	</script>
+</head>
+<body>
+	<!--  -->
+	<main class="sample"><!--본인담당 기능대표명 클래스에 작성 -->
+		<!--여기에 서브메뉴가 필요하신 경우 작성해주세요. 클래스 명은 반드시 cmsubnav 포함시켜주세요 -->
+	    <th:block th:replace="~{/views/personnel/cmsubmenu}"/>
+		
+		<!--메인 컨텐츠는 여기에 작성해주세요. 반드시 클래스명에 cmcontents  포함시켜주세요 -->
+		<div class="cmcontents">
+
+            <!--메뉴의 대표 이름과, 작성 목록 양식입니다. 반드시 div 아이디에 cmcreate포함 -->
+			<div id="cmcreate">
+				<h1>샘플이름</h1>
+				<a href="#"><i class="fa-solid fa-plus"></i><span>만들기</span></a>
+
+			</div>
+
+
+			<div id='calendar'></div>
+
+			
+			
+		     <!--메인 컨텐츠 중 게시판목록 양식 입니다. 반드시 div 아이디에 posting-format포함 -->	
+		     <!--목차 스펜태그의 갯수는 원하시는대로 변경하시고, 비율은 각자의 css에서 변경-->
+		     <!--ex) #cmposting-format ul> li >span:nth-child(1){width: 5%} -->
+
+		</div>
+	</main>
+</body>
+</html>

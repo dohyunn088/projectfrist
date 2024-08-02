@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:replace="~{views/common/layout :: layout(~{::head} ,~{::main} ) }">
+<head>
+	<link rel="stylesheet" href="/css/personnel/attendance.css">
+	<!-- <script src="/js/personnel/personnel.js" defer></script>   -->
+</head>
+<body>
+
+	<main class="personnel"><!--본인담당 기능대표명 클래스에 작성 -->
+		<!--여기에 서브메뉴가 필요하신 경우 작성해주세요. 클래스 명은 반드시 cmsubnav 포함시켜주세요 -->
+	    <th:block th:replace="~{/views/personnel/cmsubmenu}"/> 
+		
+		
+		<section class="cmcontents">
+		
+			<div id="cmcreate">
+				<h1>출퇴근 기록</h1>
+				
+			</div>
+
+			<div id="cmsearch-form">
+				<form class="search-form " action="#" method="get">
+					<input type="date" class="cminput" name="searchStartDate" required>
+					<span>~</span>
+					<input type="date" class="cminput" name="searchEndDate" required>
+
+					<select class="cmselect" id="department" name="department" >
+					    <option value="">전체부서</option>
+						<th:block th:each="department : ${T(com.green.greenGotell.domain.enums.Department).values()}">
+							<option th:value="${department.name}">[[${department.koName}]]</option>								
+						</th:block>
+					</select>  
+				
+					
+					<select id="attendance-status" name="attendanceStatus" class="cmselect" >
+					    <option value="">전체</option>
+						<th:block th:each="attendanceStatus : ${T(com.green.greenGotell.domain.enums.AttendanceStatus).values()}">
+							<option th:value="${attendanceStatus.name}">[[${attendanceStatus.KoName}]]</option>
+					    </th:block>
+					</select> 
+					
+					<input type="text" name="name" placeholder="이름을 입력해주세요.">
+					<input type="hidden" th:name="${_csrf.parameterName}"th:value="${_csrf.token}" />
+					<input type="hidden" name="page" value="0">
+					
+					<button type="submit">검색</button>
+				</form>
+			</div>
+			
+			<div id="cmposting-format">
+				<ul>
+					<li> <!--목차입니다.-->
+						<span>날짜</span>
+						<span>부서</span>
+						<span>성명</span>
+						<span>출근</span>
+						<span>퇴근</span>
+						<span>근무</span>
+						<span>초과근무</span>
+						<span>상태</span>
+						<span>사유</span>
+					</li>
+					
+					<li th:each="employeesAttendance : ${employeesAttendance}"><!--타임리프 적용하려야하는 곳 입니다.-->
+						<span th:text="${employeesAttendance.date}">2024/07/15</span>
+						<span th:text="${employeesAttendance.department.getKoName()}">인사부</span>
+						<span th:text="${employeesAttendance.name}">전젠틀</span>
+						<span th:text="${employeesAttendance.clokIn}">9:20</span>
+						<span th:text="${employeesAttendance.clokOut !=null? employeesAttendance.clokOut : '퇴근전'}"></span>
+						<span th:text="${employeesAttendance.workHoursInMinutes !=0? employeesAttendance.formattedWorkHours : employeesAttendance.formattedDummyWorkHours }">2:30</span>
+						<span th:text="${employeesAttendance.formattedOvertime !=null? employeesAttendance.formattedOvertime : 0}">0</span>
+						<span th:text="${employeesAttendance.attendanceStatus.getKoName()}">정상</span>
+						<span th:text="${employeesAttendance.commutingIssues !=null? employeesAttendance.commutingIssues : ''}"></span>
+					</li>
+					
+				</ul>
+			</div>
+			
+			<div class="pagination" th:if="${totalPages > 1}">
+			    <span th:if="${currentPage > 0}">
+			        <a th:href="@{/personnel/attendance(page=${currentPage - 1})}">&laquo; 이전</a>
+			    </span>
+			    <span th:each="pageNum : ${#numbers.sequence(0, totalPages - 1)}">
+			        <a th:href="@{/personnel/attendance(page=${pageNum})}"
+			           th:text="${pageNum + 1}"
+			           th:class="${pageNum == currentPage} ? 'active' : ''"></a>
+			    </span>
+			    <span th:if="${currentPage < totalPages - 1}">
+			        <a th:href="@{/personnel/attendance(page=${currentPage + 1})}">다음 &raquo;</a>
+			    </span>
+	    	</div>
+					
+
+
+	
+
+
+
+
+		</section>
+
+
+
+
+	</main>
+
+</body>
+</html>

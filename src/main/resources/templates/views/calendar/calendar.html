@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{views/common/layout :: layout(~{::head} ,~{::main} ) }">
+<head>
+    <meta charset='utf-8' />
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
+    <style>
+        /* 기존 스타일 유지 */
+        #calendar {
+            max-width: 100%;
+            margin: 0 auto;
+            height: 500px;
+        }
+        /* 일정 추가 폼 스타일 */
+        .event-form {
+            display: none;
+            position: fixed;
+            top: 20%;
+            left: 50%;
+            transform: translate(-50%, -20%);
+            background: white;
+            padding: 20px;
+            border: 1px solid #ddd;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            width: 300px;
+        }
+        .event-form input, .event-form textarea {
+            display: block;
+            margin-bottom: 10px;
+            width: calc(100% - 22px);
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        .event-form button {
+            margin-top: 10px;
+            width: 100%;
+            padding: 10px;
+        }
+        .event-form .close {
+            display: block;
+            text-align: right;
+            cursor: pointer;
+            color: #aaa;
+            font-size: 20px;
+        }
+        .event-form .close:hover {
+            color: #000;
+        }
+        /* 일정 수정 폼 스타일 */
+        .edit-event-form {
+            display: none;
+            position: fixed;
+            top: 20%;
+            left: 50%;
+            transform: translate(-50%, -20%);
+            background: white;
+            padding: 20px;
+            border: 1px solid #ddd;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            width: 300px;
+        }
+        .edit-event-form input, .edit-event-form textarea {
+            display: block;
+            margin-bottom: 10px;
+            width: calc(100% - 22px);
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        .edit-event-form button {
+            margin-top: 10px;
+            width: 100%;
+            padding: 10px;
+        }
+        .edit-event-form .close {
+            display: block;
+            text-align: right;
+            cursor: pointer;
+            color: #aaa;
+            font-size: 20px;
+        }
+        .edit-event-form .close:hover {
+            color: #000;
+        }
+    </style>
+    <script th:inline="javascript">
+
+        var events = /*[(${eventStr})]*/null;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+            var eventForm = document.getElementById('event-form');
+            var editEventForm = document.getElementById('edit-event-form');
+            var formDateInput = document.getElementById('event-date');
+            var eventTitleInput = document.getElementById('event-title');
+            var eventDescriptionInput = document.getElementById('event-description');
+            var editEventTitleInput = document.getElementById('edit-event-title');
+            var editEventDescriptionInput = document.getElementById('edit-event-description');
+            var editEventIdInput = document.getElementById('edit-event-id');
+
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                height: '100%',
+                dateClick: function(info) {
+                    formDateInput.value = info.dateStr;
+                    eventForm.style.display = 'block';
+                },
+                events: events.map(event => ({
+                    id: event.id,
+                    title: event.title,
+                    start: event.start,
+                    description: event.description
+                })),
+                eventClick: function(info) {
+                    // Edit Event Form 표시
+                    editEventIdInput.value = info.event.id;
+                    editEventTitleInput.value = info.event.title;
+                    editEventDescriptionInput.value = info.event.extendedProps.description || '';
+                    editEventForm.style.display = 'block';
+                }
+            });
+            calendar.render();
+
+            document.getElementById('event-submit').addEventListener('click', function() {
+                var formData = new FormData(document.getElementById('event-form-element'));
+                fetch('/calendar/add', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('input[name="_csrf"]').value
+                    }
+                })
+                    .then(response => response.text())
+                    .then(result => {
+                        alert(result);  // 서버에서 전달된 메시지 표시
+                        eventForm.style.display = 'none'; // 폼 숨기기
+                        location.href="/calendar"; //
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            });
+
+            document.getElementById('event-close').addEventListener('click', function() {
+                eventForm.style.display = 'none';
+            });
+
+            document.getElementById('edit-event-submit').addEventListener('click', function() {
+                var formData = new FormData(document.getElementById('edit-event-form-element'));
+                fetch('/calendar/update', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('input[name="_csrf"]').value
+                    }
+                })
+                    .then(response => response.text())
+                    .then(result => {
+                        alert(result);  // 서버에서 전달된 메시지 표시
+                        editEventForm.style.display = 'none'; // 폼 숨기기
+                        location.href="/calendar"; //
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            });
+
+            document.getElementById('edit-event-close').addEventListener('click', function() {
+                editEventForm.style.display = 'none';
+            });
+
+            document.getElementById('event-delete').addEventListener('click', function() {
+                var eventId = editEventIdInput.value;
+                fetch('/calendar/delete', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('input[name="_csrf"]').value
+                    },
+                    body: JSON.stringify({ id: eventId })
+                })
+                    .then(response => response.text())
+                    .then(result => {
+                        alert(result);  // 서버에서 전달된 메시지 표시
+                        editEventForm.style.display = 'none'; // 폼 숨기기
+                        location.href="/calendar"; //
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            });
+        });
+    </script>
+</head>
+<body>
+<main class="sample">
+    <th:block th:replace="~{/views/calendar/submenu}"/>
+    <div class="cmcontents">
+        <div id="cmcreate">
+            <h1>할일</h1>
+        </div>
+        <div id='calendar'></div>
+    </div>
+    <!-- 이벤트 추가 폼 -->
+    <div id="event-form" class="event-form">
+        <span id="event-close" class="close">&times;</span>
+        <form id="event-form-element" th:action="@{/calendar/add}" method="post">
+            <input type="hidden" id="event-date" name="start" />
+            <input type="text" name="title" placeholder="제목" required />
+            <textarea name="description" placeholder="설명"></textarea>
+            <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+            <button type="button" id="event-submit">추가</button>
+        </form>
+    </div>
+
+    <!-- 이벤트 수정 폼 -->
+    <div id="edit-event-form" class="edit-event-form">
+        <span id="edit-event-close" class="close">&times;</span>
+        <form id="edit-event-form-element" th:action="@{/calendar/update}" method="post">
+            <input type="hidden" id="edit-event-id" name="id" />
+            <input type="text" id="edit-event-title" name="title" placeholder="제목" required />
+            <textarea id="edit-event-description" name="description" placeholder="설명"></textarea>
+            <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+            <button type="button" id="edit-event-submit">수정</button>
+            <button type="button" id="event-delete">삭제</button>
+        </form>
+    </div>
+</main>
+</body>
+</html>

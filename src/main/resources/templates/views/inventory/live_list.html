@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{views/common/layout :: layout(~{::head} ,~{::main} ) }">
+
+<head>
+	<link rel="stylesheet" href="/css/inventory/live_writei.css">
+</head>
+
+<body>
+	<!--  -->
+	<main class="sample"><!--본인담당 기능대표명 클래스에 작성 -->
+		<!--여기에 서브메뉴가 필요하신 경우 작성해주세요. 클래스 명은 반드시 cmsubnav 포함시켜주세요 -->
+		<th:block th:replace="~{/views/inventory/cmsubmenu}" />
+
+		<!--메인 컨텐츠는 여기에 작성해주세요. 반드시 클래스명에 cmcontents  포함시켜주세요 -->
+		<div class="cmcontents">
+
+			<div id="cmcreate">
+				<h1>실시간 재고 현황</h1>
+				<a href="/liveInventory/arrival_exit"><i class="fa-solid fa-plus"></i><span>만들기</span></a>
+			</div>
+			<!--메인 컨텐츠 중 게시판 서치 양식 입니다. 반드시 div 아이디에 cmsearch-form포함 -->
+			<div id="cmsearch-form">
+				<form th:action="@{/inventory/liveInventory}" method="get">
+					<select>
+						<option>선택</option>
+						<option>프론트부</option>
+						<option>식음료부</option>
+						<option>시설관리부</option>
+						<option>보안부</option>
+						<option>인산부</option>
+						<option>지원부</option>
+						<option>마케팅부</option>
+					</select>
+					<input type="text" name="name" placeholder="검색어를 입력해주세요.">
+					<button type="submit">검색</button>
+				</form>
+			</div>
+			<div id="cmposting-format">
+				<ul>
+					<li> <!--목차입니다.-->
+
+						<span>코드</span>
+						<span>이름</span>
+						<span>단위</span>
+						<span>공급처</span>
+						<span>단가</span>
+						<span>총 재고</span>
+						<span>잔여개수</span>
+						<span>입/출</span>
+						<span>부서</span>
+
+					</li>
+					<li><!--타임리프 적용하려야하는 곳 입니다.-->
+
+						<span>FN-000</span>
+						<span>윈드브레이커</span>
+						<span>EACH</span>
+						<span>(주) 그린컴</span>
+						<span>3000</span>
+						<span>40</span>
+						<span>12</span>
+						<span><strong>입고</strong></span>
+						<span>프론트부</span>
+					</li>
+
+					<li><!--타임리프 적용하려야하는 곳 입니다.-->
+						<span>FN-000</span>
+						<span>윈드브레이커</span>
+						<span>EACH</span>
+						<span>(주) 그린컴</span>
+						<span>3000</span>
+						<span>40</span>
+						<span>8</span>
+						<span><strong>출고</strong></span>
+						<span>프론트부</span>
+					</li>
+					<li><!--타임리프 적용하려야하는 곳 입니다.-->
+						<span>FN-000</span>
+						<span>윈드브레이커</span>
+						<span>EACH</span>
+						<span>(주) 그린컴</span>
+						<span>3000</span>
+						<span>40</span>
+						<span>10</span>
+						<span><strong>출고</strong></span>
+						<span>인사부</span>
+					</li>
+					<li><!--타임리프 적용하려야하는 곳 입니다.-->
+						<span>FN-000</span>
+						<span>윈드브레이커</span>
+						<span>EACH</span>
+						<span>(주) 그린컴</span>
+						<span>3000</span>
+						<span>40</span>
+						<span>40</span>
+						<span><strong>입고</strong></span>
+						<span>프론트부</span>
+					</li>
+
+				</ul>
+
+			</div>
+		</div>
+	</main>
+</body>
+
+</html>

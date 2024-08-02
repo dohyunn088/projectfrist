@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{views/common/layout :: layout(~{::head} ,~{::main} ) }">
+
+<head>
+	<link rel="stylesheet" href="/css/inventory/item_list.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+	<script src="/js/inventory/category2.js"></script>
+	<!--<script src="/js/inventory/search.js"></script>-->
+</head>
+
+<body>
+	<!--  -->
+	<main class="sample"><!--본인담당 기능대표명 클래스에 작성 -->
+		<!--여기에 서브메뉴가 필요하신 경우 작성해주세요. 클래스 명은 반드시 cmsubnav 포함시켜주세요 -->
+		<th:block th:replace="~{/views/inventory/cmsubmenu}" />
+
+		<!--메인 컨텐츠는 여기에 작성해주세요. 반드시 클래스명에 cmcontents  포함시켜주세요 -->
+		<div class="cmcontents">
+			<div id="cmcreate">
+				<h1>품목 리스트</h1>
+				<a href="/inventory/create"><i class="fa-solid fa-plus"></i><span>만들기</span></a>
+			</div>
+			<!--메인 컨텐츠 중 게시판 서치 양식 입니다. 반드시 div 아이디에 cmsearch-form포함 -->
+			<div id="cmsearch-form">
+				<form th:action="@{/inventory}" method="get">
+					<div>
+						<label for="parentCategory">대분류:</label>
+						<select id="parentCategory" name="categoryId">
+							<option value="">선택하세요</option>
+							<option th:each="category : ${categories}" th:value="${category.id}"
+								th:text="${category.name}"></option>
+						</select>
+					</div>
+
+					<div>
+						<label for="middleCategory">중분류:</label>
+						<select id="middleCategory" name="categoryId">
+							<option value="">선택하세요</option>
+						</select>
+					</div>
+
+					<div>
+						<label for="subCategory">소분류:</label>
+						<select id="subCategory" name="categoryId">
+							<option value="">선택하세요</option>
+						</select>
+					</div>
+					<input type="text" name="name" placeholder="검색어를 입력해주세요.">
+					<button type="submit">검색</button>
+				</form>
+			</div>
+			<div id="cmposting-format" class="personnel-list">
+				<ul>
+					<li>
+						<span>코드</span>
+						<span>이름</span>
+						<span>공급자</span>
+						<span>가격</span>
+						<span>수량단위</span>
+						<span>소분류</span>
+					</li>
+
+					<li th:each="inventory : ${inventorys}">
+						<span th:text="${inventory.itemCode}">코드</span>
+						<span th:text="${inventory.name}">이름</span>
+						<span th:text="${inventory.itemSource}">공급자</span>
+						<span th:text="${inventory.itemMoney}">가격</span>
+						<span th:text="${inventory.standard}">수량단위</span>
+						<span th:text="${inventory.categoryId}">소분류</span>
+					</li>
+				</ul>
+			</div>
+			<div class="pagination" th:if="${totalPages > 1}">
+				<span th:if="${currentPage > 0}"> <a th:href="@{/inventory(page=${currentPage - 1})}">&laquo; 이전</a>
+				</span> <span th:each="pageNum : ${#numbers.sequence(0, totalPages - 1)}">
+					<a th:href="@{/inventory(page=${pageNum})}" th:text="${pageNum + 1}"
+						th:class="${pageNum == currentPage} ? 'active' : ''"></a>
+				</span> <span th:if="${currentPage < totalPages - 1}"> <a
+						th:href="@{/inventory(page=${currentPage + 1})}">다음 &raquo;</a>
+				</span>
+			</div>
+		</div>
+	</main>
+</body>
+
+</html>

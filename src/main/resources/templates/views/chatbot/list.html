@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<script src="/webjars/jquery/jquery.min.js"></script>
+<script src="/webjars/sockjs-client/sockjs.min.js"></script>
+<script src="/webjars/stomp-websocket/stomp.min.js"></script>
+<script src="/js/chatbot/chatbot.js" defer></script>
+<link rel="stylesheet" href="/css/chatbot/chatbot.css">
+</head>
+
+<body>
+	<div class="chatbot">
+		<article id="chat-bot">
+			<div class="wrap">
+				<section id="conversation">
+					<div class="wrap view-size">
+						<ul class="bot-menu">
+							<li>
+								<button class="btn-bot" id="btn-bot"></button>
+							</li>
+						</ul>
+						<div class="container" id="bot-container">
+							<div class="c-header flex between col-center">
+								<p>
+									<b>Gotell챗봇</b>
+								</p>
+								<p class="close flex end col-center">
+									<span onclick="btnCloseClicked()"></span>
+								</p>
+							</div>
+							<div class="c-content" id="chat-content">
+								<!--대화내용 들어가는 영역-->
+								
+							</div>
+							
+							<div class="c-question flex col-center">
+								<span class="q-wrap"> 
+									<input type="text" class="question" id="question" placeholder="질문을 입력하세요"/>
+									<button class="btn-send" onclick="btnMsgSendClicked()"></button>
+								</span>
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+		</article>
+		
+	</div>
+</body>
+
+</html>

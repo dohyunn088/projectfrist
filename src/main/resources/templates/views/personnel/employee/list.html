@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:replace="~{views/common/layout :: layout(~{::head} ,~{::main} ) }">
+<head>
+	<link rel="stylesheet" href="/css/personnel/personnel.css">
+	<script src="/js/personnel/personnel.js" defer></script>
+</head>
+<body>
+	<!--  -->
+	<main class="personnel"><!--본인담당 기능대표명 클래스에 작성 -->
+		<!--여기에 서브메뉴가 필요하신 경우 작성해주세요. 클래스 명은 반드시 cmsubnav 포함시켜주세요 -->
+	    <th:block th:replace="~{/views/personnel/cmsubmenu}"/>
+
+
+		<section class="cmcontents">
+
+			<div id="cmcreate">
+				<h1>직원목록</h1>
+				<button type="button" class="createbtn"><i class="fa-solid fa-plus"></i><span>신규직원</span></button>
+
+			</div>
+
+			<div id="cmsearch-form">
+				<form class="search-form " th:action="@{/personnel/search}" method="post">
+
+					<select class="cmselect" id="department" name="department" >
+					     <option value="">전체부서</option>
+						<th:block th:each="department : ${T(com.green.greenGotell.domain.enums.Department).values()}">
+							<option th:value="${department.name}">[[${department.koName}]]</option>								
+						</th:block>
+					</select> 
+				
+					
+					<select id="status" name="employeeStatus" class="cmselect" >
+					    <option value="">전체</option>
+						<th:block th:each="employeeStatus : ${T(com.green.greenGotell.domain.enums.EmployeeStatus).values()}">
+							<option th:value="${employeeStatus.name}">[[${employeeStatus.KoName}]]</option>
+					    </th:block>
+					</select>
+					
+					<input type="text" name="name" placeholder="이름을 입력해주세요.">
+					<input type="hidden" th:name="${_csrf.parameterName}"th:value="${_csrf.token}" />
+					<input type="hidden" name="page" value="0">
+
+					<button type="submit">검색</button>
+				</form>
+			</div>
+
+			<div id="cmposting-format" class="personnel-list">
+				<ul>
+					<li> <!--목차입니다.-->
+						<span>사번</span>
+						<span>이름</span>
+						<span>부서</span>
+						<span>직급</span>
+						<span>연락처</span>
+						<span>주소</span>
+						<span>이메일</span>
+						<span>입사일</span>
+						<span>상태</span>
+						<span></span>
+					</li>
+
+					<li th:each="employees:${employees}"><!--타임리프 적용하려야하는 곳 입니다.-->
+						<span th:text="${employees.id}">사번</span>
+						<span th:text="${employees.name}">성명</span>
+						<span th:text="${employees.department.getKoName()}">부서</span>
+						<span  th:text="${employees.HighRole != null ? employees.HighRole.roleName : '미할당'}">직급</span>
+						<span th:text="${employees.phone !=null ? employees.phone : '미등록' }">연락처</span>
+						<span th:text="${employees.address !=null ? employees.address : '미등록' }">주소</span>
+						<span th:text="${employees.email}">이메일</span>
+						<span th:text="${employees.hireDate}">입사일</span>
+						<span th:text="${employees.employeeStatus.getKoName()}">상태</span>
+						<span><button class="cmbutton2 updatebtn" th:data-employee-id="${employees.id}">수정</button></span>
+					</li>
+
+				</ul>
+			</div>
+
+			<div class="pagination" th:if="${totalPages > 1}">
+				<span th:if="${currentPage > 0}"> <a
+					th:href="@{/personnel(page=${currentPage - 1})}">&laquo; 이전</a>
+				</span> <span th:each="pageNum : ${#numbers.sequence(0, totalPages - 1)}">
+					<a th:href="@{/personnel(page=${pageNum})}"
+					th:text="${pageNum + 1}"
+					th:class="${pageNum == currentPage} ? 'active' : ''"></a>
+				</span> <span th:if="${currentPage < totalPages - 1}"> <a
+					th:href="@{/personnel(page=${currentPage + 1})}">다음 &raquo;</a>
+				</span>
+			</div>
+
+
+
+
+
+			<div id="create-employee">
+				<button type="button" class="cmbutton cancelbtn">
+					<i class="fa-solid fa-arrow-left"></i><span>취소하기</span>
+				</button>
+
+				<div>
+				 	<p>신규직원추가</p>
+
+					<form action="/personnel/create" method="post">
+					
+						<div class="create-form-wrap">
+							<label for="name" class="cmlabel">이름</label><br> 
+							<input type="text" id="name" name="name" class="cminput" required> <br>
+							<div class="error name-failure hide">2글자 이상,문자만 입력가능합니다</div>
+							
+						</div>
+						
+						<div class="create-form-wrap">
+							<label for="email" class="cmlabel">이메일</label> <br> 
+							<input type="email"id="email" name="email" class="cminput" required> <br>
+							<div class="error email-failure hide">이메일 형식이 맞지 않습니다</div>
+						
+						</div>
+						
+						
+						<div class="create-form-wrap">
+							<label for="pass" class="cmlabel">비밀번호</label> <br> 
+							<input type="password" id="pass" name="pass" class="cminput" required> <br>
+							<div class="error pass-failure hide">6글자 이상(영문자,숫자,!@$%*)</div>
+						
+						</div>
+						
+						<div class="create-form-wrap">
+									
+							<label for="department" class="cmlabel">부서</label> <br> 
+							<select class="cmselect" id="department" name="department" required>
+								<th:block th:each="department : ${T(com.green.greenGotell.domain.enums.Department).values()}">
+									<option th:value="${department.name}">[[${department.koName}]]</option>								
+								</th:block>
+							</select> 
+							
+						</div>
+						
+						<div class="create-form-wrap">
+								
+							<label for="position" class="cmlabel">직급</label> <br>
+							<select class="cmselect" id="position"name="role" required>
+								<th:block th:each="role : ${T(com.green.greenGotell.domain.enums.Role).values()}">
+									<option th:value="${role.name}">[[${role.roleName}]]</option>
+							    </th:block>
+							</select> <br>
+						
+						</div>
+						
+						<div class="create-form-wrap">
+							<label for="hireDate" class="cmlabel">입사일</label> <br> 
+							<input type="date"id="hireDate" name="hireDate" class="cminput" required> <br>
+						
+						</div>
+						
+						
+						<div class="create-form-wrap">
+								
+							<label for="status" class="cmlabel">상태</label><br> 
+							<select id="status" name="employeeStatus" class="cmselect" required>
+								<th:block th:each="employeeStatus : ${T(com.green.greenGotell.domain.enums.EmployeeStatus).values()}">
+									<option th:value="${employeeStatus.name}">[[${employeeStatus.KoName}]]</option>
+							    </th:block>
+							</select> <br>
+						
+						</div>
+									
+						<div class="optionbtn-wrap">
+							<input type="hidden" th:name="${_csrf.parameterName}"th:value="${_csrf.token}" />
+							<button type="submit" class="cmbutton">추가</button>
+							<button type="reset" class="cmbutton2">초기화</button>
+						</div>
+					
+
+
+
+					</form>
+
+				</div>
+
+
+
+			</div>
+			
+			
+			<div id="update-employee">
+				<button type="button" class="cmbutton update-cancelbtn">
+					<i class="fa-solid fa-arrow-left"></i><span>취소하기</span>
+				</button>
+
+				<div>
+				 	<p>직원수정</p>
+
+					<form action="|/personnel/update/${employees.id}|" method="post">
+					
+						<div class="create-form-wrap">
+							<label for="name" class="cmlabel">이름</label><br> 
+							<input type="text" id="name" name="name" class="cminput" required> <br>
+							<div class="error name-failure hide">2글자 이상,문자만 입력가능합니다</div>
+							
+						</div>
+						
+	
+						
+						<div class="create-form-wrap">
+									
+							<label for="department" class="cmlabel">부서</label> <br> 
+							<select class="cmselect" id="department" name="department" required>
+								<th:block th:each="department : ${T(com.green.greenGotell.domain.enums.Department).values()}">
+									<option th:value="${department.name}">[[${department.koName}]]</option>								
+								</th:block>
+							</select> 
+							
+						</div>
+						
+						<div class="create-form-wrap">
+								
+							<label for="position" class="cmlabel">직급</label> <br>
+							<select class="cmselect" id="position"name="role" required>
+								<th:block th:each="role : ${T(com.green.greenGotell.domain.enums.Role).values()}">
+									<option th:value="${role.name}">[[${role.roleName}]]</option>
+							    </th:block>
+							</select> <br>
+						
+						</div>
+						
+						<div class="create-form-wrap">
+							<label for="hireDate" class="cmlabel">입사일</label> <br> 
+							<input type="date"id="hireDate" name="hireDate" class="cminput" required> <br>
+						
+						</div>
+						
+						
+						<div class="create-form-wrap">
+								
+							<label for="status" class="cmlabel">상태</label><br> 
+							<select id="status" name="employeeStatus" class="cmselect" required>
+								<th:block th:each="employeeStatus : ${T(com.green.greenGotell.domain.enums.EmployeeStatus).values()}">
+									<option th:value="${employeeStatus.name}">[[${employeeStatus.KoName}]]</option>
+							    </th:block>
+							</select> <br>
+						
+						</div>
+									
+						<div class="optionbtn-wrap">
+						    <input type="hidden" name="_method" value="put">
+							<input type="hidden" th:name="${_csrf.parameterName}"th:value="${_csrf.token}" />
+							<button type="submit" class="cmbutton">수정</button>
+							<button type="reset" class="cmbutton2">초기화</button>
+						</div>
+					
+
+
+
+					</form>
+
+				</div>
+
+
+
+			</div>
+
+
+
+
+
+		</section>
+
+
+
+
+	</main>
+
+</body>
+</html>

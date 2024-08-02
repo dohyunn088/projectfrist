@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{views/common/layout :: layout(~{::head} ,~{::main} ) }">
+
+<head>
+	<meta name="_csrf" th:content="${_csrf.token}" />
+	<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+
+	<link rel="stylesheet" href="/css/index.css">
+	<script src="/js/index.js"></script>
+	<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
+
+</head>
+
+<body>
+	<main>
+		<div class="index cmcontents">
+
+			<!--프로필 대시보드-->
+			<div class="dashboard profile">
+				<ul>
+					<li class="profilePhoto"><img th:if="${#authorization.expression('isAuthenticated()')}"
+							th:src="${ProfilePhoto.profileImage != null ? 'data:image/jpeg;base64,' + ProfilePhoto.profileImage : 'https://i.pinimg.com/564x/a5/e8/4d/a5e84dd8104ba6287b72e16401d173d7.jpg'}"
+							alt="프로필 사진"></li>
+					<li class="subfont" th:text="${#authentication.principal.department.getKoName()}"></li>
+					<li sec:authentication="principal.name"></li>
+				</ul>
+
+			</div>
+
+
+
+			<!--최근 공지사항-->
+			<div class="dashboard lately-notice-wrap">
+				<div class="lately-notice cmposting-format">
+					<p class="subfont">최근 공지사항</p>
+					<ul>
+						<li> <!--목차입니다.-->
+							<span>번호</span>
+							<span>부서</span>
+							<span>제목</span>
+							<span>등록일</span>
+							<span>글쓴이</span>
+						</li>
+						<li th:each="notice:${recentNotices}">
+							<span th:text="${notice.fixed} ? '❗' : ${notice.no} " class="no">번호</span>
+							<span th:text="${notice.division}" style="width: 8%;">부서</span>
+							<span>
+								<a th:href="|/notices/detail/${notice.no}|" th:text="${notice.title}">제목</a>
+							</span>
+							<span th:text="${notice.updatedAt.toLocalDate}">등록일</span>
+							<span th:text="${notice.name}">작성자</span>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+
+			<!--출퇴근 대시보드-->
+			<div class="dashboard todayAttendance-wrap">
+
+				<div class="todayAttendance">
+
+					<ul class="today-commute-schedule">
+						<li class="subfont">오늘의 출퇴근 스케줄</li>
+						<li><span>출근 시간 : </span><span th:text="${todaySchedule.scheduledStart}">09:00</span></li>
+						<li><span>퇴근 시간 : </span><span th:text="${todaySchedule.scheduledEnd}">18:00</span></li>
+					</ul>
+
+
+					<ul class="today-commute-status">
+						<li class="subfont">오늘의 출퇴근 현황</li>
+						<li><span>출근시간 : </span><span>출근전</span></li>
+						<li><span>퇴근시간 : </span><span>퇴근전</span></li>
+						<li><span>근무시간 : </span><span>00:00</span></li>
+						<li><span>초과 근무시간 : </span><span>00:00</span></li>
+						<li><span>상태 : </span><span>미출근</span></li>
+					</ul>
+
+					<ul class="commute-button">
+						<li><button class="clock-in-button cmbutton">출근</button></li>
+						<li><button class="clock-out-button cmbutton">퇴근</button></li>
+					</ul>
+
+				</div>
+
+
+			</div>
+
+
+			<!--최근 추가된 물품 리스트-->
+			<div class="dashboard">
+				<div class="lately-item cmposting-format">
+
+					<p class="subfont">최근 물품리스트</p>
+					<ul>
+						<li> <!--목차입니다.-->
+							<span>코드</span>
+							<span>이름</span>
+							<span>가격</span>
+							<span>단위</span>
+						</li>
+						<li th:each="inventory : ${inventorys}">
+							<span th:text="${inventory.itemCode}">코드</span>
+							<span th:text="${inventory.name}">이름</span>
+							<span th:text="${inventory.itemMoney}">가격</span>
+							<span th:text="${inventory.standard}">수량단위</span>
+						</li>
+					</ul>
+				</div>
+
+
+			</div>
+
+
+			<!--기능3-->
+			<div class="dashboard">
+				<div id='calendar'></div>
+			</div>
+
+		</div>
+
+
+
+
+	</main>
+
+</body>
+
+</html>

@@ -1,0 +1,84 @@
+
+@charset "UTF-8";
+.index{display: grid; grid-template-columns: 0.6fr 0.9fr 1.5fr; grid-template-rows:40% 58%;
+grid-template-areas:
+'ia ib ib'
+'ic id ie';
+
+gap:15px;
+
+}
+
+.cmcontents{background-color:initial; padding:0; margin-left: 0;}
+
+
+
+
+.dashboard{
+	width: 100%; overflow-y: auto;
+}
+
+.index > div:nth-child(1){
+	grid-area: ia;
+}
+
+
+.index > div:nth-child(2){
+	grid-area: ib;
+}
+
+
+.index > div:nth-child(3){
+	grid-area: ic;
+}
+
+.index > div:nth-child(4){
+	grid-area: id;
+}
+
+
+.index > div:nth-child(5){
+	grid-area: ie;
+}
+
+
+.dashboard{background-color: var(--subnav-background); border-radius: 10px;}
+/*근태*/
+.todayAttendance{padding: 20px}
+
+.todayAttendance>ul{margin-bottom: 40px}
+
+.todayAttendance>ul>li{border: 1px solid var(--sub-color4); padding: 3px 5px;border-radius: 5px ;margin-bottom: 10px ;display: flex; justify-content: space-between; }
+.todayAttendance>ul>li:nth-child(1){border:none;}
+
+.todayAttendance>.commute-button{margin-bottom: 0px}
+.todayAttendance>.commute-button>li{border:none;}
+.todayAttendance>.commute-button>li:nth-child(2){margin-bottom:0px }
+.todayAttendance>.commute-button>li>button{width: 100%;border-radius: 5px;}
+
+/*본인 프로필*/
+.subfont{margin-bottom: 10px; font-weight: 600}
+.profilePhoto{width: 80%; height: 290px; margin: 0 auto; padding-top: 30px}
+.profilePhoto img{width: 100%; height:100%; border-radius:50% }
+.profile > ul > li:nth-child(2),.profile > ul > li:nth-child(3){width: 60%;margin: 0 auto; padding-top: 10px; text-align: center; }
+.profile > ul > li:nth-child(3){font-size: 25px;}
+
+
+
+/*공지사항*/
+
+/*급여내역 현황 */
+.lately-notice,.lately-item{padding: 10px 20px 0px;  min-width: 0;}
+.lately-notice p,.lately-item p{text-align: left; padding: 10px 0; font-size: 20px}
+.lately-notice ul> li >span:nth-child(1){width: 5%}
+.lately-notice ul> li >span:nth-child(2){width: 10%}
+.lately-notice ul> li >span:nth-child(3){width: 40%}
+.lately-notice ul> li >span:nth-child(4){width: 10%}
+.lately-notice ul> li >span:nth-child(5){width: 10%}
+
+.lately-item ul{width: 100%}
+.lately-item ul> li >span:nth-child(1){width: 10%}
+.lately-item ul> li >span:nth-child(2){width: 40%}
+.lately-item ul> li >span:nth-child(3){width: 30%}
+.lately-item ul> li >span:nth-child(4){width: 15%}
+

@@ -1,0 +1,27 @@
+
+button {
+    background-color: var(--main-color);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+#cmsearch-form form{
+	display: inline-flex;
+}
+
+#cmposting-format ul li span{
+	width: 30%;
+}
+#cmsearch-form input{
+	height: 37px;
+}
+.pagination{width: 80%; margin: 0 auto; padding: 10px 0; display: flex; justify-content: center; color: var( --sub-color3);}
+.pagination span{margin-left: 10px}

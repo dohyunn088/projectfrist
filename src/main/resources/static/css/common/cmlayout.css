@@ -1,0 +1,87 @@
+ /*담당자: 전송희 절대 건들지 말아주세요.*/
+ 
+ 
+
+
+/*전체 배경 컬러*/
+body{background-color:var(--body-color); }
+
+
+ /*전체 레이이아웃 구조 설정*/
+.layoutWrap{display: grid; grid-template-columns: 200px auto; grid-template-rows: 74px calc(100vh - 74px); position:relative;
+grid-template-areas:
+'a b b'
+'a c c'
+;}
+
+
+
+
+ /*공통메인메뉴설정*/
+.cmnav{width: 100%; height: 100%; grid-area: a; padding: 34px 15px; color:var(--main-color)}
+	/*삼단메뉴바  */
+.menubar{font-size: 25px; padding: 5px; border-radius:var(--menu-border-radius); margin-bottom: 10px}
+	/*삼단메뉴바 클릭시*/
+.menubar.menubarhover{background-color: var(--main-color);color: #fff; cursor:pointer; }
+.menubarset{grid-template-columns: 65px auto;; grid-template-rows: 74px auto; }
+	/*메인메뉴설정*/
+.cmnav-bttom a{width:100%; padding: 5px 8px; border-radius:var(--menu-border-radius); font-size:var(--sub-title); margin-bottom: 5px }
+.cmnav-bttom a:hover{background: var(--main-color); color:var(--background-color1);}
+.cmnav-bttom span{margin-left: 15px}
+.menu>li>a,.administrator-menu>li>a{position: relative;}
+
+
+.logout{width: 33px;position: absolute; bottom: 21px; left: 21px;color: var(--background-color1);}
+.logout button{padding:5px; border: none; font-size:18px;border-radius:5px; background-color: inherit; }
+
+
+	/*로고*/
+.logo{width: 70%; height: 80px; margin: 0 auto; }
+.logo a{width: 100%; height: 80px;}
+.logo img{width: 100%; height: 80px;} /*로고 사이즈*/
+.cmnav-top{width: 100%; margin-bottom: 20px;}
+.cmnav-bttom li{padding-bottom: 4px;} /*메뉴들의 간격 조정*/
+
+
+
+ /*공통 헤더 설정*/
+.cmheader{width: 100%; height: 100%; grid-area: b; }
+
+
+/*공통 메인 설정*/
+main {
+	width: 100%;
+	height: auto;
+	grid-area: c;
+	background-image:
+		url(https://products.ls.graphics/mesh-gradients/images/61.-Lavender.jpg);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+	border-radius: 15px 0 0 0;
+	display: grid;
+	grid-template-columns: 190px auto;
+	grid-template-areas: 'd e';
+	padding: 10px 10px 0px 10px
+}
+
+/*공통 서브메뉴설정*/
+.cmsubnav{grid-area: d; background-color: var(--subnav-background); border-radius: 15px 15px 0px 0px; padding: 15px 12.5px 0px 12.5px}
+.cmsubnav> ul >li > ul{padding-left: 10px}
+.cmsubnav> ul > li > span{display:inline-block; font-size: var(--main-title); font-weight: 600; color:var(--main-color); margin-bottom: 20px;padding-bottom: 8px;border-bottom: 1px solid var(--sub-color); width: 100%}
+.cmsubnav> ul > li > ul >li>span{display:block; padding-left:18px; margin-bottom: 8px; font-size: 18px}
+.cmsubnav> ul > li > ul >li{position: relative; margin-bottom: 25px}
+.cmsubnav> ul > li > ul >li >span:before{content:"\f0da"; font-family: "Font Awesome 5 Free"; font-weight: 900;  display:block; position: absolute; top: 5px; left: 0; font-size: 18px; }
+.cmsubnav> ul > li > ul >li>ul>li{padding-left:30px; font-size: 16px; margin-bottom: 6px}
+.cmsubnav> ul > li > ul >li>ul>li:hover{font-weight: 700;}
+/*메인컨텐츠 설정*/
+.cmcontents{grid-area: e; background-color: var(--subnav-background); border-radius: 15px 15px 0px 0px; padding: 15px 12.5px 0px 12.5px; margin-left: 10px; overflow-y: auto;}
+
+
+
+/*js 적용*/
+.spanhidden{display:none;}
+.spanshow{display: block; position:absolute; top:0; left: 40px; width: 100px;padding: 5px; background-color:var(--main-color);border-radius: 5px; z-index: 100;}
+
+
+

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{views/common/layout :: layout(~{::head} ,~{::main} ) }">
+<head>
+	<link rel="stylesheet" href="/css/notices/notice.css">
+</head>
+<body>
+	<!--  -->
+	<main class="sample"><!--본인담당 기능대표명 클래스에 작성 -->
+		<!--여기에 서브메뉴가 필요하신 경우 작성해주세요. 클래스 명은 반드시 cmsubnav 포함시켜주세요 -->
+	    <th:block th:replace="~{/views/notices/cmsubmenu}"/>
+		
+		<!--메인 컨텐츠는 여기에 작성해주세요. 반드시 클래스명에 cmcontents  포함시켜주세요 -->
+		<div class="cmcontents">
+			<div id="cmcreate">
+				<h1>공지사항</h1>
+				<form id="write-back" action="/#" method="get">
+					<a href="/notices"><span>뒤로가기</span></a>
+				</form>
+			</div>
+				<div id="notice-button">
+					<form action="/notices" method="post">
+					<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+					<div class="notice-write-division">
+						<ul>
+							<li>
+								<b>부서 : </b>
+								<select name="division">
+									<option value="전체">전체</option>
+									<option value="프론트오피스부">프론트오피스부</option>
+									<option value="식음료부">식음료부</option>
+									<option value="시설관리부">시설관리부</option>
+									<option value="보안부">보안부</option>
+									<option value="인사부">인사부</option>
+									<option value="지원부">지원부</option>
+									<option value="마케팅부">마케팅부</option>
+								</select>
+							</li>
+							<li>
+								<b>고정여부</b>
+								<input type="radio" id="r1" name="fixed" value="1"><label for="r1">고정함</label>
+								<input type="radio" id="r2" name="fixed" value="0" checked="checked"><label for="r2">고정안함</label>
+							</li>	                                  					
+						</ul>
+					</div>
+					<div class="notice-write">
+						<ul>
+							<li>
+								<b>제목 </b>
+								<br>
+								<input type="text" placeholder="제목을 입력하세요" name="title" required="required">
+								<br>
+							</li>
+							<br><hr width =100% align= LEFT><br>
+							<li>
+								<b>내용</b>
+								<br>
+								<textarea name="content" placeholder="내용을 입력하세요" required="required"></textarea>
+								<br>
+							</li>
+						</ul>
+					</div>
+					<br>
+					<div class="button-container">											
+						<button type="submit">공지등록</button>
+					</div>
+					</form>
+				</div>
+			</div>
+		</main>
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{views/common/layout :: layout(~{::head} ,~{::main} ) }">
+<head>
+	<link rel="stylesheet" href="/css/notices/notice.css">
+	<script type="text/javascript">
+		function btnDeleteClicked(){
+			return confirm("정말로 삭제하시겠습니까?"); // true|false
+		}
+		
+		function btnUpdateClicked(){
+			//$("#default-mode").hide();
+			document.querySelector("#default-mode").style.display='none';
+			//$("#update-mode").show();
+			document.querySelector("#update-mode").style.display='block';
+			
+			// 현재 값들을 폼에 설정
+		}
+		
+		function btnCancelClicked(){
+			document.querySelector("#default-mode").style.display='block';
+			document.querySelector("#update-mode").style.display='none';
+		}
+	</script>
+</head>
+<body>
+	<!--  -->
+	<main class="sample"><!--본인담당 기능대표명 클래스에 작성 -->
+		<!--여기에 서브메뉴가 필요하신 경우 작성해주세요. 클래스 명은 반드시 cmsubnav 포함시켜주세요 -->
+	    <th:block th:replace="~{/views/notices/cmsubmenu}"/>
+		
+		<!--메인 컨텐츠는 여기에 작성해주세요. 반드시 클래스명에 cmcontents  포함시켜주세요 -->
+		<div class="cmcontents">
+			<div id="cmcreate">
+				<h1>공지사항</h1>
+				<form id="write-back" action="/#" method="get">
+					<a href="/notices"><span>뒤로가기</span></a>
+				</form>
+			</div>
+			<div id="notice-button">
+				<div id="default-mode">
+					<div class="notice-write-division">
+						<b>부서</b>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
+						<span th:text="${detail.division}" style="margin-right: 50px;">부서</span>
+					
+						<b>등록일</b>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
+						<span th:text="${detail.updatedAt.toLocalDate}">등록일</span>	
+						<!--작성자-->		
+					</div>
+					<div class="notice-detail">
+						<ul>
+							<li>
+								<b>제목 : </b>
+								<div id="detail-title">
+								<b th:text="${detail.title}">제목</b>
+								</div>
+							</li>
+							<li>
+								<b>내용 : </b>
+								<div id="detail-content">
+								<span th:text="${detail.content}">상세정보</span>
+								<br>
+								</div>
+							</li>
+						</ul>
+					</div>
+					<br>					
+					<div class="button-container">
+				        <button th:if="${isCreator}" onclick="btnUpdateClicked()">수정</button>
+				        <form th:if="${isCreator}" onsubmit="return btnDeleteClicked()" th:action="|/notices/${detail.no}|" method="post">
+				            <input type="hidden" name="_method" value="delete">			
+				            <button type="submit">삭제</button>
+				        </form>
+				    </div>				
+				</div>
+				<!--///수정모드-->
+				<form th:action="|/notices/${detail.no}|" method="post" id="update-mode" style="display: none;">
+					<div class="notice-write-division">
+						<ul>
+							<select name="division" style="margin-right: 30px;">
+								<option value="전체" th:selected="${detail.division == '전체'}">전체</option>
+							    <option value="프론트오피스부" th:selected="${detail.division == '프론트오피스부'}">프론트오피스부</option>
+							    <option value="식음료부" th:selected="${detail.division == '식음료부'}">식음료부</option>
+							    <option value="시설관리부" th:selected="${detail.division == '시설관리부'}">시설관리부</option>
+							    <option value="보안부" th:selected="${detail.division == '보안부'}">보안부</option>
+							    <option value="인사부" th:selected="${detail.division == '인사부'}">인사부</option>
+							    <option value="지원부" th:selected="${detail.division == '지원부'}">지원부</option>
+							    <option value="마케팅부" th:selected="${detail.division == '마케팅부'}">마케팅부</option>
+							  </select>
+							<li>
+							  <b>고정여부</b>
+							  <input type="radio" id="r1" name="fixed" value="true" th:checked="${detail.fixed}">
+							  <label for="r1">고정함</label>
+							  <input type="radio" id="r2" name="fixed" value="false" th:checked="${!detail.fixed}">
+							  <label for="r2">고정안함</label>
+							</li>			
+						</ul>
+					</div>
+					<div class="notice-write">
+						<ul>
+							<li>
+								<b>제목 </b>
+								<br>
+								<input type="text" name="title" th:value="${detail.title}">
+								<br>
+							</li>
+							<br><hr width =100% align= LEFT><br>
+							<li>
+								<b>내용</b>
+								<br>
+								<textarea name="content">[(${detail.content})]</textarea>
+								<br>
+							</li>
+						</ul>
+					</div>
+						<br>
+						<div class="button-container">					
+							<input type="hidden" name="_method" value="put">
+								<button type="submit">수정완료</button>
+								<button type="button" onclick="btnCancelClicked()">취소</button>
+						</div>
+				</form>		
+			</div>		
+		</div>
+	</main>
+</body>
+</html>

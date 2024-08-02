@@ -1,0 +1,58 @@
+
+
+.form-container {
+  background-color: var(--background-color1);
+  padding: 20px;
+  border-radius: var(--menu-border-radius);
+  box-shadow: 0 4px 8px var(--sub-color6);
+  max-width: 600px;
+  margin: auto;
+
+}
+
+.form-container form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-container form div {
+  margin-bottom: 15px;
+}
+
+.form-container label {
+  font-size: var(--sub-title);
+  color: var(--main-color);
+  margin-bottom: 5px;
+}
+
+.form-container input[type="text"],
+.form-container 
+select {
+  width: 100%;
+  padding: 10px;
+  font-size: var(--body-text);
+  border: 1px solid var(--sub-color5);
+  border-radius: var(--menu-border-radius);
+  background-color: var(--sub-color7);
+}
+
+.form-container button[type="submit"],
+.form-container button[type="button"] {
+  padding: 10px 20px;
+  font-size: var(--body-text);
+  color: var(--background-color1);
+  background-color: var(--sub-color3);
+  border: none;
+  border-radius: var(--menu-border-radius);
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.form-container button[type="button"] {
+  background-color: var(--sub-color2);
+}
+
+.form-container button[type="submit"]:hover,
+.form-container button[type="button"]:hover {
+  background-color: var(--sub-color4);
+}

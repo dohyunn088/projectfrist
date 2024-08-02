@@ -1,0 +1,35 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<header class="cmheader">
+	<div class="cmheader-wrap">
+		<div class="cmnav-search">
+			<form action="/" method="get">
+				<div class="search-wrapper">
+					<i class="fa-solid fa-search"></i>
+					<input type="text" name="search" placeholder="Search" />
+				</div>
+			</form>
+		</div>
+
+
+
+		<div class="cmheader-icon">
+
+			<ul>
+				<li><i class="fa fa-bell" aria-hidden="true"></i></li>
+				<li sec:authorize="isAuthenticated()">프로필 이미지</li>
+				<li sec:authorize="isAuthenticated()" th:text="${#authentication.principal.department.getKoName()}">부서명</li>
+				<li sec:authorize="isAuthenticated()"><a href="/mypage" sec:authentication="principal.name">닉네임</a></li>
+				<li>
+					<div id="darkMode">
+						<i id="sun-icon" class="fas fa-sun"></i>
+						<i id="moon-icon" class="fas fa-moon" style="display: none;"></i>
+						<label class="switch">
+							<input type="checkbox" id="toggle-dark-mode">
+							<span class="slider round"></span>
+						</label>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+</header>

@@ -1,0 +1,99 @@
+@charset "UTF-8";
+
+.cmcontents{background-color:initial; margin-left: 0;}
+#cmcreate{width: 100%; height:50px; margin-bottom: 10px}
+
+/*레이아웃 설정*/
+.mypage >.wrap{display: flex; justify-content: space-between; height: 92%}
+.mypage >.wrap >div:nth-child(2){width: 69%; display: flex; justify-content: space-between; flex-flow: column;}
+.mypage >.wrap >div:nth-child(2) >div{width: 100%; height: 49.3%}
+
+/*프로필 설정*/
+.Profile{width: 30%; height: 100%; padding-bottom: 10px}
+.Profile img{display:block; width: 250px; height: 250px; max-width: 50%;
+    max-height: 30%; margin: 0 auto;border-radius: 50%; margin-bottom: 10px}
+.subfont{margin-bottom: 20px}
+.Profile > div{margin: 0 auto;width: 70%}
+.Profile > div >p{margin-bottom: 10px; font-weight: 500; color: var(--main-color)}
+.Profile > div >p>span{display:inline-block; border-top: 1px solid var(--sub-color5); width: 100% ;font-weight: 600; color: black}
+.Profile>p{text-align: center; font-size: 21px; font-weight: 500 ;margin-bottom: 30px }
+.Profile > div > p{position: relative;}
+.Profile > div > p > button{position: absolute; right: 0 ;top: 0; padding: 3px 3px; font-size: 13px;}
+#cmsearch-form{height: 50px;margin-bottom: 15px;overflow-y:auto; }
+#cmposting-format>ul>li:nth-child(1){padding: 7px 7px;}
+
+/*휴가 및 병가 현황 */
+.leave-request-status #cmposting-format ul> li >span:nth-child(1){width: 10%}
+.leave-request-status #cmposting-format ul> li >span:nth-child(2){width: 5%}
+.leave-request-status #cmposting-format ul> li >span:nth-child(3){width: 5%}
+.leave-request-status #cmposting-format ul> li >span:nth-child(4){width: 20%}
+.leave-request-status #cmposting-format ul> li >span:nth-child(5){width: 20%}
+.leave-request-status #cmposting-format ul> li >span:nth-child(6){width: 10%}
+
+
+
+/*급여내역 현황 */
+.salary-status #cmposting-format ul> li >span:nth-child(1){width: 20%}
+.salary-status #cmposting-format ul> li >span:nth-child(2){width: 20%}
+.salary-status #cmposting-format ul> li >span:nth-child(3){width: 20%}
+.salary-status #cmposting-format ul> li >span:nth-child(4){width: 20%}
+.salary-status #cmposting-format ul> li >span:nth-child(5){width: 20%}
+
+
+.personnel{position: relative; overflow: hidden;}
+
+/*프로필수정*/
+#edit-profile{ position: absolute; right: -300px;top:7px; width: 300px; height: calc(100% - 15px); background-color: #fff;
+border: 2px solid var(--sub-color2); border-right:none; border-radius: 10px 0px 0px 10px; transition: all 0.5s ease; overflow-y: auto;}
+#edit-profile>.cmbutton{position: absolute; right: 14px; top: 14px;}
+#edit-profile>.cmbutton>i{margin-right: 5px}
+#edit-profile.cancel {
+    right: -300px; 
+}
+#edit-profile.create {
+    right: 0px; 
+}
+
+
+
+/*새비밀번호,새프로필사진 모달 디자인*/
+.edit-pass-wrap{width: 400px; height: 400px; position:absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #fff; border: 2px solid var(--sub-color3);}
+.edit-pass-wrap>div:nth-child(1){display: flex;justify-content: space-between;}
+.edit-pass-wrap>div:nth-child(1)>p{margin-bottom: 0px}
+#edit-pass-form{width: 50%; margin: 0 auto; padding-top: 40px}
+
+.edit-pass-wrap.cancel{
+    display: none; 
+}
+.edit-pass-wrap.create {
+    display: block;
+}
+
+
+
+/*이메일*/
+
+
+
+
+
+#edit-profile >div{padding-top: 100px; width: 70%; margin: 0 auto;}
+#edit-profile >div p{color: var(--sub-color3); font-size: 18px; font-weight: 700; text-align: center; margin-bottom: 30px}
+.edit-form-wrap{ width:100%; height:70px;}
+.optionbtn-wrap{display: flex;justify-content: space-between; padding: 40px 0;}
+
+.hide {
+	display: none;
+}
+
+.error {
+	font-size: 12px;
+	color: red;
+}
+
+#search-btn{font-size: 14px; padding: 3px 5px;}
+#profile-image{width: 90%}
+
+#profile-image::file-selector-button {
+	background-color: #fff; padding: 3px 3px; border-radius: 5px; border:1.5px solid var(--sub-color2); font-size: 14px;color:var(--sub-color2) ; line-height: 14px
+}

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{views/common/layout :: layout(~{::head} ,~{::main} ) }">
+<head>
+	<link rel="stylesheet" href="/css/notices/notice.css">
+	<script>
+	    function redirectToDivision() {
+	        var selectElement = document.getElementById("division-select");
+	        var selectedValue = selectElement.value;
+	        if (selectedValue) {
+	            window.location.href = "/notices/" + selectedValue + "/1";
+	        }
+	    }
+	</script>
+	
+</head>
+
+<body>
+	<!--  -->
+	<main class="sample"><!--본인담당 기능대표명 클래스에 작성 -->
+		<!--여기에 서브메뉴가 필요하신 경우 작성해주세요. 클래스 명은 반드시 cmsubnav 포함시켜주세요 -->
+	    <th:block th:replace="~{/views/notices/cmsubmenu}"/>
+		
+		<!--메인 컨텐츠는 여기에 작성해주세요. 반드시 클래스명에 cmcontents  포함시켜주세요 -->
+		<div class="cmcontents">
+		
+            <!--메뉴의 대표 이름과, 작성 목록 양식입니다. 반드시 div 아이디에 cmcreate포함 -->
+			<div id="cmcreate">
+				<h1>공지사항</h1>
+				<form class="write" action="/notices/new" method="get">
+					<a href="/notices/new"><i class="fa-solid fa-plus"></i><span>만들기</span></a>
+				</form>
+			</div>
+			<!--메인 컨텐츠 중 게시판 서치 양식 입니다. 반드시 div 아이디에 cmsearch-form포함 -->
+			<div id="cmsearch-form">
+				<form id="search-form">
+					<select id="division-select" onchange="redirectToDivision()">
+                        <option value="1">전체</option>
+                        <option value="2">프론트오피스부</option>
+                        <option value="3">식음료부</option>
+                        <option value="4">시설관리부</option>
+                        <option value="5">보안부</option>
+                        <option value="6">인사부</option>
+                        <option value="7">지원부</option>
+                        <option value="8">마케팅부</option>
+                    </select> 
+					<select>
+						<option>제목</option>
+						<option>내용</option>
+						<option>제목+내용</option>
+					</select> <input type="text" placeholder="검색어를 입력해주세요.">
+					<button type="submit">검색</button>
+				</form>
+			</div>
+			
+			<div id="cmposting-format">
+				<ul>
+					<li> <!--목차입니다.-->
+						<span>번호</span>
+						<span>부서</span>
+						<span>제목</span>
+						<span>등록일</span>
+						<span>글쓴이</span>
+					</li>
+					<li th:each="notice:${list}" >
+						<span th:text="${notice.fixed} ? '❗' : ${notice.no} " class="no">번호</span>
+						<span th:text="${notice.division}" style="width: 8%;">부서</span>
+						<span>
+							<a th:href="|/notices/detail/${notice.no}|" th:text="${notice.title}">제목</a>
+						</span>
+						<span th:text="${notice.updatedAt.toLocalDate}">등록일</span>
+						<span th:text="${notice.name}">작성자</span>						
+					</li>
+				</ul>
+			</div>
+			
+			<div class="pagination">
+			    <span th:each="i : ${#numbers.sequence(1, page.totalPages)}">
+			        <a th:href="@{/notices/{division}/{page}(division=${division}, page=${i})}" 
+						th:text="${i}" 
+						th:class="${page.number == i} ? 'active' : ''"></a>
+			    </span>
+			</div>
+			
+		</div>
+	</main>
+
+</body>
+</html>

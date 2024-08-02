@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{views/common/layout :: layout(~{::head} ,~{::main} ) }">
+<head>
+	<link rel="stylesheet" href="/css/personnel/attendance.css">
+	<!-- <script src="/js/personnel/personnel.js" defer></script>   -->
+</head>
+<body>
+
+	<main class="personnel"><!--본인담당 기능대표명 클래스에 작성 -->
+		<!--여기에 서브메뉴가 필요하신 경우 작성해주세요. 클래스 명은 반드시 cmsubnav 포함시켜주세요 -->
+	    <th:block th:replace="~{/views/personnel/cmsubmenu}"/> 
+		
+		
+		<section class="cmcontents">
+		
+			<div id="cmcreate">
+				<h1>휴가 및 병가 기록</h1>
+				
+			</div>
+
+			<div id="cmsearch-form">
+				<form class="search-form " action="#" method="get">
+					<input type="date" class="cminput" required>
+					<span>~</span>
+					<input type="date" class="cminput" required>
+
+					<select>
+						<option>전체</option>
+						<option>프론트오피스부</option>
+						<option>식음료부</option>
+						<option>시설관리부</option>
+						<option>보안부</option>
+						<option>인사부</option>
+						<option>지원부</option>
+						<option>마케팅부</option>
+					</select> 
+				
+					
+					<select>
+					    <option>전체</option>
+						<option>휴가</option>
+						<option>병가</option>
+						<option>경조사</option>
+						<option></option>
+					</select> 
+					
+					<input type="text" placeholder="이름을 입력해주세요.">
+					<button type="submit">검색</button>
+				</form>
+			</div>
+			
+			<div id="cmposting-format" class="leave-requset-list">
+				<ul>
+					<li> <!--목차입니다.-->
+						<span>신청번호</span>
+						<span>신청자</span>
+						<span>신청일</span>
+						<span>유형</span>
+						<span>시작일</span>
+						<span>종료일</span>
+						<span>승인상태</span>
+						<span></span>
+					</li>
+					
+					<li><!--타임리프 적용하려야하는 곳 입니다.-->
+						<span>15321</span>
+						<span>전젠틀</span>
+						<span>2024/07/15</span>
+						<span>병가</span>
+						<span>2024/07/15</span>
+						<span>2024/07/15</span>
+						<span>승인대기</span>
+						<span><button class="cmbutton2">승인</button></span>
+					</li>
+					<li><!--타임리프 적용하려야하는 곳 입니다.-->
+						<span>15320</span>
+						<span>전송희</span>
+						<span>2024/07/15</span>
+						<span>경조사</span>
+						<span>2024/07/15</span>
+						<span>2024/07/15</span>
+						<span>승인대기</span>
+						<span><button class="cmbutton2">승인</button></span>
+					</li>
+								<li><!--타임리프 적용하려야하는 곳 입니다.-->
+						<span>15319</span>
+						<span>이한빛</span>
+						<span>2024/07/15</span>
+						<span>병가</span>
+						<span>2024/07/15</span>
+						<span>2024/07/15</span>
+						<span>승인대기</span>
+						<span><button class="cmbutton2">승인</button></span>
+					</li>
+					
+								<li><!--타임리프 적용하려야하는 곳 입니다.-->
+						<span>15318</span>
+						<span>이유진</span>
+						<span>2024/07/15</span>
+						<span>휴가</span>
+						<span>2024/07/15</span>
+						<span>2024/07/15</span>
+						<span>승인대기</span>
+						<span><button class="cmbutton2">승인</button></span>
+					</li>
+					
+								<li><!--타임리프 적용하려야하는 곳 입니다.-->
+						<span>15317</span>
+						<span>도래미</span>
+						<span>2024/07/15</span>
+						<span>병가</span>
+						<span>2024/07/15</span>
+						<span>2024/07/15</span>
+						<span>승인대기</span>
+						<span><button class="cmbutton2">승인</button></span>
+					</li>
+					
+								<li><!--타임리프 적용하려야하는 곳 입니다.-->
+						<span>15321</span>
+						<span>마젠가</span>
+						<span>2024/07/15</span>
+						<span>병가</span>
+						<span>2024/07/15</span>
+						<span>2024/07/15</span>
+						<span>승인대기</span>
+						<span><button class="cmbutton2">승인</button></span>
+					</li>
+					
+								<li><!--타임리프 적용하려야하는 곳 입니다.-->
+						<span>15316</span>
+						<span>이유리</span>
+						<span>2024/07/15</span>
+						<span>경조사</span>
+						<span>2024/07/15</span>
+						<span>2024/07/15</span>
+						<span>승인대기</span>
+						<span><button class="cmbutton2">승인</button></span>
+					</li>
+					
+								<li><!--타임리프 적용하려야하는 곳 입니다.-->
+						<span>15315</span>
+						<span>신짱구</span>
+						<span>2024/07/15</span>
+						<span>휴가</span>
+						<span>2024/07/15</span>
+						<span>2024/07/15</span>
+						<span>승인대기</span>
+						<span><button class="cmbutton2">승인</button></span>
+					</li>
+					
+								<li><!--타임리프 적용하려야하는 곳 입니다.-->
+						<span>15314</span>
+						<span>손석구</span>
+						<span>2024/07/15</span>
+						<span>병가</span>
+						<span>2024/07/15</span>
+						<span>2024/07/15</span>
+						<span>승인대기</span>
+						<span><button class="cmbutton2">승인</button></span>
+					</li>
+					
+								<li><!--타임리프 적용하려야하는 곳 입니다.-->
+						<span>15313</span>
+						<span>한조미</span>
+						<span>2024/07/15</span>
+						<span>병가</span>
+						<span>2024/07/15</span>
+						<span>2024/07/15</span>
+						<span>승인대기</span>
+						<span><button class="cmbutton2">승인</button></span>
+					</li>
+					
+								<li><!--타임리프 적용하려야하는 곳 입니다.-->
+						<span>15312</span>
+						<span>양미리</span>
+						<span>2024/07/08</span>
+						<span>휴가</span>
+						<span>2024/07/21</span>
+						<span>2024/07/23</span>
+						<span>승인대기</span>
+						<span><button class="cmbutton2">승인</button></span>
+					</li>
+					
+								<li><!--타임리프 적용하려야하는 곳 입니다.-->
+						<span>15321</span>
+						<span>고등어</span>
+						<span>2024/07/08</span>
+						<span>병가</span>
+						<span>2024/07/10</span>
+						<span>2024/07/13</span>
+						<span>승인대기</span>
+						<span><button class="cmbutton2">승인</button></span>
+					</li>
+					
+								<li><!--타임리프 적용하려야하는 곳 입니다.-->
+						<span>15311</span>
+						<span>라미아</span>
+						<span>2024/07/06</span>
+						<span>경조사</span>
+						<span>2024/07/09</span>
+						<span>2024/07/15</span>
+						<span>승인대기</span>
+						<span><button class="cmbutton2">승인</button></span>
+					</li>
+					
+								<li><!--타임리프 적용하려야하는 곳 입니다.-->
+						<span>15310</span>
+						<span>소유리</span>
+						<span>2024/07/03</span>
+						<span>병가</span>
+						<span>2024/07/05</span>
+						<span>2024/07/07</span>
+						<span>승인대기</span>
+						<span><button class="cmbutton2">승인</button></span>
+					</li>
+								<li><!--타임리프 적용하려야하는 곳 입니다.-->
+						<span>1539</span>
+						<span>안정환</span>
+						<span>2024/07/01</span>
+						<span>휴가</span>
+						<span>2024/07/13</span>
+						<span>2024/07/15</span>
+						<span>승인대기</span>
+						<span><button class="cmbutton2">승인</button></span>
+					</li>
+					
+				</ul>
+			</div>
+
+		</section>
+
+
+
+
+	</main>
+
+</body>
+</html>
